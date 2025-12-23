@@ -38,6 +38,27 @@
             font-size: 1.1em;
             opacity: 0.9;
         }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .nav-btn {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .nav-btn:hover {
+            background: white;
+            color: #667eea;
+        }
         .content {
             padding: 40px 20px;
         }
@@ -164,6 +185,10 @@
         <div class="header">
             <h1>ChatGPT DAN Prompts Library</h1>
             <p>Comprehensive collection of 100+ categorized prompts from 2025</p>
+            <div class="nav-buttons">
+                <a href="/evidence.html" class="nav-btn">📋 Evidence Organizer</a>
+                <a href="/resources.html" class="nav-btn">📚 Legal Resources</a>
+            </div>
         </div>
         
         <div class="content">

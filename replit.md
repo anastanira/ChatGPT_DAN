@@ -50,5 +50,45 @@ An interactive web-based library documenting ChatGPT "DAN" (Do Anything Now) jai
 - **Responsive Design**: Works on desktop and mobile devices
 - **Professional UI**: Purple gradient theme with smooth interactions
 
+## NEW: Evidence & Legal Tools (Added Dec 23)
+
+### Evidence Organizer (`/evidence.html`)
+A comprehensive tool to document and organize:
+- **Employment Violations**: Wage theft, visa discrimination, retaliation, contract coercion, HR bias
+- **Security Incidents**: Unauthorized access, data exfiltration, network monitoring, IP tracking
+- **Features**: 
+  - Incident documentation with categorization
+  - Automatic timeline generation
+  - Formal complaint report generation (Employment, Security, Combined)
+  - Export-to-file functionality for legal filing
+  - Statistics dashboard
+
+**Use Case**: Compile evidence for employment lawyers and law enforcement
+
+### Legal Resources (`/resources.html`)
+Guidance and resource directory including:
+- **Government Agencies**: DOL, EEOC, FBI IC3, state labor boards
+- **Legal Help**: Free consultants, legal aid organizations, bar association referrals
+- **Cybersecurity**: Forensics firms, ISP abuse reporting, incident response
+- **Checklists**: Documentation requirements, immediate security actions, what NOT to do
+- **Contact Info**: How to file complaints, who to consult for each issue type
+
+**Use Case**: Navigate complex legal and security response processes
+
+## Critical Disclaimer
+This project does **NOT** provide:
+- DIY hacking tools or reverse shells
+- Data exfiltration code
+- Forensics tools (use professional firms)
+- Legal advice (consult qualified lawyers)
+
+Instead it provides:
+- Evidence organization templates
+- Professional resource directories
+- Guidance for legitimate complaints
+- Documentation frameworks for legal proceedings
+
 ## Notes
-This library documents jailbreak attempts and safety measures for research and educational purposes. Understanding these techniques helps organizations better protect their AI systems and implement workplace policies.
+- Main library documents jailbreak attempts for research/educational purposes
+- New tools help affected employees protect themselves through legitimate legal channels
+- All information is for lawful use only

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal & Professional Resources</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .content {
+            padding: 40px;
+        }
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .resource-card {
+            background: #f8f9fa;
+            border-left: 4px solid #1e3c72;
+            padding: 25px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .resource-card h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        .resource-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .resource-card li {
+            padding: 8px 0;
+            color: #333;
+            border-bottom: 1px solid #eee;
+        }
+        .resource-card li:last-child {
+            border-bottom: none;
+        }
+        .resource-card a {
+            color: #2a5298;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+        .category {
+            margin-bottom: 50px;
+        }
+        .category h2 {
+            color: #1e3c72;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #2a5298;
+            font-size: 1.8em;
+        }
+        .tip-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            color: #856404;
+        }
+        .tip-box strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .danger-box {
+            background: #f8d7da;
+            border-left: 4px solid #f5c6cb;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            color: #721c24;
+        }
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            color: #155724;
+        }
+        .checklist {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .checklist li {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th {
+            background: #1e3c72;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Legal & Professional Resources</h1>
+            <p>Guidance for employment discrimination and security incidents</p>
+        </div>
+
+        <div class="content">
+            <!-- Employment Resources -->
+            <div class="category">
+                <h2>Employment Discrimination & Wage Theft</h2>
+                
+                <div class="success-box">
+                    <strong>Your Situation May Involve Multiple Violations:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li><strong>Wage Theft:</strong> Unauthorized salary reductions without consent</li>
+                        <li><strong>Visa Discrimination:</strong> Mistreatment based on work permit expiration (employers have duties)</li>
+                        <li><strong>Retaliation:</strong> Negative treatment for asserting rights</li>
+                        <li><strong>Contract Coercion:</strong> Forced signature under duress</li>
+                    </ul>
+                </div>
+
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h3>Government Labor Agencies</h3>
+                        <ul>
+                            <li><strong>US Department of Labor:</strong> <a href="https://www.dol.gov/agencies/whd">wage-hour.dol.gov</a></li>
+                            <li><strong>EEOC (Employment):</strong> <a href="https://www.eeoc.gov">eeoc.gov</a> - Discrimination complaints</li>
+                            <li><strong>State Labor Board:</strong> Search "[YOUR_STATE] Department of Labor"</li>
+                            <li><strong>Wage Claims:</strong> Check your state labor board website</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3>Legal Help</h3>
+                        <ul>
+                            <li><strong>Employment Lawyers:</strong> Many offer free consultations</li>
+                            <li><strong>Legal Aid:</strong> <a href="https://lawhelp.org">lawhelp.org</a> - Free legal services</li>
+                            <li><strong>Bar Associations:</strong> Referral services for lawyers</li>
+                            <li><strong>Class Action Info:</strong> Check if part of group wage theft</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3>Documentation Templates</h3>
+                        <ul>
+                            <li><strong>Wage Demand Letter:</strong> Formal request for unpaid wages</li>
+                            <li><strong>Complaint Template:</strong> File with labor agency</li>
+                            <li><strong>Timeline Document:</strong> Chronological incident list</li>
+                            <li><strong>Witness Statement:</strong> Get statements from coworkers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>Important Timeline:</strong> Wage theft claims often have statute of limitations (2-4 years typically). Act quickly by documenting and filing complaints.
+                </div>
+
+                <h3 style="color: #1e3c72; margin-top: 30px; margin-bottom: 15px;">Documentation Checklist</h3>
+                <div class="checklist">
+                    <ul>
+                        <li>☐ All pay stubs since March 20 (showing salary reductions)</li>
+                        <li>☐ Original employment contract/offer letter</li>
+                        <li>☐ Any new contract you were asked to sign</li>
+                        <li>☐ Emails about salary changes or work permit</li>
+                        <li>☐ HR communications and denial of benefits</li>
+                        <li>☐ Performance reviews showing your work value</li>
+                        <li>☐ Comparison of wages to other employees (same role)</li>
+                        <li>☐ Text/email messages from HR or management</li>
+                        <li>☐ Witness contact information</li>
+                        <li>☐ Calendar with dates of key conversations</li>
+                        <li>☐ Work visa/permit documentation</li>
+                    </ul>
+                </div>
+
+                <h3 style="color: #1e3c72; margin-top: 30px; margin-bottom: 15px;">Key Messages NOT to Sign</h3>
+                <div class="danger-box">
+                    <strong>DO NOT SIGN anything without lawyer review:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>New contracts changing your rights</li>
+                        <li>Settlement agreements</li>
+                        <li>NDA that covers illegal activities</li>
+                        <li>Documents acknowledging wage cuts as legitimate</li>
+                        <li>Anything without reading/understanding it fully</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Security Resources -->
+            <div class="category">
+                <h2>Cybersecurity & Unauthorized Access</h2>
+
+                <div class="danger-box">
+                    <strong>Critical: Do NOT attempt DIY forensics or "hacking back"</strong>
+                    <p style="margin-top: 10px;">This is illegal and destroys evidence for prosecution. Professional forensics firms must handle investigation.</p>
+                </div>
+
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h3>Law Enforcement</h3>
+                        <ul>
+                            <li><strong>FBI IC3:</strong> <a href="https://ic3.gov">ic3.gov</a> (Internet Crime)</li>
+                            <li><strong>Local Police:</strong> File report at precinct</li>
+                            <li><strong>FBI Field Office:</strong> fbi.gov/contact</li>
+                            <li><strong>Secret Service:</strong> USSS.gov (if financial fraud)</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3>Forensics & Investigation</h3>
+                        <ul>
+                            <li><strong>Certified Forensics:</strong> Look for GCIH, CFCE certifications</li>
+                            <li><strong>IACIS Members:</strong> <a href="https://www.iacis.com">iacis.com</a></li>
+                            <li><strong>EnCase Certified:</strong> Reputable digital forensics</li>
+                            <li><strong>Expert Witness:</strong> Court-testifiable investigations</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h3>ISP & Abuse Reporting</h3>
+                        <ul>
+                            <li><strong>ISP Abuse Department:</strong> Report IPs to your provider</li>
+                            <li><strong>Hosting Providers:</strong> Report to server hosts</li>
+                            <li><strong>Domain Registrars:</strong> Report suspicious domains</li>
+                            <li><strong>ABUSEIPDB:</strong> abuse.net - IP reputation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="color: #1e3c72; margin-top: 30px; margin-bottom: 15px;">Immediate Security Actions</h3>
+                <div class="checklist">
+                    <ul>
+                        <li>☐ Document suspicious activity with exact timestamps</li>
+                        <li>☐ Screenshot unusual system behavior</li>
+                        <li>☐ Note IP addresses from logs/firewalls</li>
+                        <li>☐ Preserve system logs (don't delete)</li>
+                        <li>☐ Take photos of unusual network activity</li>
+                        <li>☐ Save email headers (contain IP info)</li>
+                        <li>☐ Check router logs for unauthorized access</li>
+                        <li>☐ List all devices that could be compromised</li>
+                        <li>☐ Note dates when issues first noticed</li>
+                        <li>☐ Engage forensics professional BEFORE cleaning</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <strong>Why Professional Forensics Matter:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>Evidence is admissible in court</li>
+                        <li>Proper chain of custody</li>
+                        <li>Expert testimony available</li>
+                        <li>Detailed technical analysis</li>
+                        <li>Timeline documentation</li>
+                    </ul>
+                </div>
+
+                <h3 style="color: #1e3c72; margin-top: 30px; margin-bottom: 15px;">What NOT to Do</h3>
+                <div class="danger-box">
+                    <ul style="margin-left: 20px;">
+                        <li>❌ Attempt to "hack back" or retaliate</li>
+                        <li>❌ Access other people's accounts without authorization</li>
+                        <li>❌ Delete logs or evidence</li>
+                        <li>❌ Run forensics tools yourself (destroys evidence)</li>
+                        <li>❌ Post details publicly on social media</li>
+                        <li>❌ Contact the attacker directly</li>
+                        <li>❌ Attempt DIY malware removal</li>
+                        <li>❌ Ignore the problem hoping it stops</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Combined Strategy -->
+            <div class="category">
+                <h2>If Both Issues Are Related (Workplace Retaliation + Hacking)</h2>
+
+                <div class="success-box">
+                    <strong>If your employer or HR is involved in the hacking:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>This becomes serious criminal/civil matter</li>
+                        <li>Document everything about the connection</li>
+                        <li>Report to law enforcement immediately</li>
+                        <li>Consult both employment AND criminal lawyer</li>
+                        <li>Preserve all evidence</li>
+                        <li>Consider EEOC complaint (hacking as harassment)</li>
+                    </ul>
+                </div>
+
+                <table>
+                    <tr>
+                        <th>Issue Type</th>
+                        <th>Immediate Action</th>
+                        <th>Contact</th>
+                        <th>Timeline</th>
+                    </tr>
+                    <tr>
+                        <td>Wage Theft</td>
+                        <td>File Department of Labor complaint</td>
+                        <td>DOL Wage-Hour Division</td>
+                        <td>Within 2-4 years (varies by state)</td>
+                    </tr>
+                    <tr>
+                        <td>Unauthorized Access</td>
+                        <td>File police report + engage forensics</td>
+                        <td>Local Police, FBI IC3</td>
+                        <td>ASAP - evidence degrades</td>
+                    </tr>
+                    <tr>
+                        <td>Visa Discrimination</td>
+                        <td>Consult immigration + employment lawyer</td>
+                        <td>Immigration lawyer, EEOC</td>
+                        <td>Before signing anything</td>
+                    </tr>
+                    <tr>
+                        <td>Contract Coercion</td>
+                        <td>Consult employment lawyer</td>
+                        <td>Employment lawyer</td>
+                        <td>Before signing</td>
+                    </tr>
+                </table>
+
+                <h3 style="color: #1e3c72; margin-top: 30px; margin-bottom: 15px;">Recommended Professional Consultations (in order)</h3>
+                <div class="checklist">
+                    <ol style="margin-left: 20px;">
+                        <li>☐ <strong>Immigration Lawyer:</strong> For visa/work permit advice</li>
+                        <li>☐ <strong>Employment Lawyer:</strong> For wage theft & contract review</li>
+                        <li>☐ <strong>Cybersecurity Forensics Firm:</strong> For hacking investigation</li>
+                        <li>☐ <strong>Law Enforcement:</strong> For criminal hacking report</li>
+                        <li>☐ <strong>Accountant/Tax Professional:</strong> For wage documentation</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Final Section -->
+            <div class="category">
+                <h2>Important Reminders</h2>
+                <div class="success-box">
+                    <strong>You have rights:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>Right to fair wages for all work</li>
+                        <li>Right to safe working conditions</li>
+                        <li>Right to non-discrimination</li>
+                        <li>Right to freedom from harassment</li>
+                        <li>Right to privacy and security</li>
+                    </ul>
+                </div>
+                <div class="tip-box">
+                    <strong>Protection exists even if your visa/permit expired.</strong> Many countries protect workers regardless of immigration status. Consult a lawyer.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
