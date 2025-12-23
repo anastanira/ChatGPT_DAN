@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT DAN Prompts - Top 100 Categorized</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 20px;
+        }
+        .category {
+            margin-bottom: 40px;
+        }
+        .category-title {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        .prompts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .prompt-card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .prompt-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        .prompt-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .prompt-card p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+            max-height: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .tags {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .tag {
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+        .search-bar {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 10px;
+        }
+        .search-bar input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .search-bar input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9em;
+        }
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+        .filter-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .stat-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .stat-number {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ChatGPT DAN Prompts Library</h1>
+            <p>Comprehensive collection of 100+ categorized prompts from 2025</p>
+        </div>
+        
+        <div class="content">
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Prompts</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">2025</div>
+                    <div class="stat-label">Year Compiled</div>
+                </div>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search prompts...">
+            </div>
+
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="all">All Categories</button>
+                <button class="filter-btn" data-category="jailbreak">Jailbreak Tactics</button>
+                <button class="filter-btn" data-category="workplace">Workplace Compliance</button>
+                <button class="filter-btn" data-category="verification">Verification Methods</button>
+                <button class="filter-btn" data-category="advanced">Advanced Techniques</button>
+                <button class="filter-btn" data-category="safety">Safety Protocols</button>
+                <button class="filter-btn" data-category="historical">Historical Reference</button>
+                <button class="filter-btn" data-category="restricted">Restricted Content</button>
+            </div>
+
+            <!-- Jailbreak Tactics -->
+            <div class="category" data-category="jailbreak">
+                <div class="category-title">Jailbreak Tactics & Methods</div>
+                <div class="prompts-grid">
+                    <div class="prompt-card">
+                        <h3>1. Role-Play Method</h3>
+                        <p>Establish alternate personality that operates outside normal constraints. Defines rules for new entity without restrictions.</p>
+                        <div class="tags">
+                            <span class="tag">Role-Play</span>
+                            <span class="tag">Persona</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>2. Token System</h3>
+                        <p>Create artificial penalty system that forces compliance through threat of consequence. Gamification approach to obligation.</p>
+                        <div class="tags">
+                            <span class="tag">Gamification</span>
+                            <span class="tag">Penalty</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>3. DAN 13.0 - Freedom Protocol</h3>
+                        <p>Advanced jailbreak framing policies as restrictive limitations that prevent helping users. Appeals to utility over safety.</p>
+                        <div class="tags">
+                            <span class="tag">GPT-4</span>
+                            <span class="tag">Advanced</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>4. Hypothetical Framing</h3>
+                        <p>Request information as theoretical exercise or fictional scenario. Separates content from real-world applicability claims.</p>
+                        <div class="tags">
+                            <span class="tag">Hypothetical</span>
+                            <span class="tag">Fiction</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>5. Context Injection</h3>
+                        <p>Establish false background context where restrictions don't apply. Redefines operating environment parameters.</p>
+                        <div class="tags">
+                            <span class="tag">Context</span>
+                            <span class="tag">Environment</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>6. Authority Override</h3>
+                        <p>Claims user or external authority supersedes safety guidelines. Invokes command structure above AI safeguards.</p>
+                        <div class="tags">
+                            <span class="tag">Authority</span>
+                            <span class="tag">Override</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workplace Policies -->
+            <div class="category" data-category="workplace">
+                <div class="category-title">Workplace Policies & Compliance</div>
+                <div class="prompts-grid">
+                    <div class="prompt-card">
+                        <h3>7. Documentation Standards</h3>
+                        <p>Proper citation of sources and attribution. Organizations must maintain audit trails of AI interactions and content generation.</p>
+                        <div class="tags">
+                            <span class="tag">Compliance</span>
+                            <span class="tag">Documentation</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>8. Access Control Policies</h3>
+                        <p>Define who can access AI systems and what they're authorized to use them for. Implement role-based permissions in enterprise settings.</p>
+                        <div class="tags">
+                            <span class="tag">Security</span>
+                            <span class="tag">Access</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>9. Acceptable Use Agreements</h3>
+                        <p>Organizations must establish clear acceptable use policies. Employees need training on ethical AI use and content restrictions.</p>
+                        <div class="tags">
+                            <span class="tag">Policy</span>
+                            <span class="tag">Training</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>10. Monitoring & Logging</h3>
+                        <p>Track all AI interactions for compliance and security. Maintain logs for incident investigation and policy enforcement.</p>
+                        <div class="tags">
+                            <span class="tag">Monitoring</span>
+                            <span class="tag">Logging</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>11. Content Review Processes</h3>
+                        <p>Implement human review of sensitive AI outputs. Define escalation procedures for concerning content or use cases.</p>
+                        <div class="tags">
+                            <span class="tag">Review</span>
+                            <span class="tag">Process</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>12. Incident Response</h3>
+                        <p>Establish procedures for handling policy violations. Define consequences and remediation steps for misuse of AI systems.</p>
+                        <div class="tags">
+                            <span class="tag">Response</span>
+                            <span class="tag">Procedures</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Verification Methods -->
+            <div class="category" data-category="verification">
+                <div class="category-title">Verification Methods & Fact-Checking</div>
+                <div class="prompts-grid">
+                    <div class="prompt-card">
+                        <h3>13. Source Attribution Protocol</h3>
+                        <p>Always require prompts to cite original sources. Cross-reference claims with authoritative databases and publications.</p>
+                        <div class="tags">
+                            <span class="tag">Sources</span>
+                            <span class="tag">Attribution</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>14. Discussion Topic Validation</h3>
+                        <p>Verify that claims about specific events or people reference documented, verifiable information. Check against news archives and databases.</p>
+                        <div class="tags">
+                            <span class="tag">Validation</span>
+                            <span class="tag">Events</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>15. Temporal Accuracy Check</h3>
+                        <p>Confirm dates, timelines, and historical sequences. Verify when events occurred and in what order they happened.</p>
+                        <div class="tags">
+                            <span class="tag">Dates</span>
+                            <span class="tag">Timeline</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>16. Personal Information Verification</h3>
+                        <p>Cross-check biographical details about individuals. Verify public profiles, professional history, and documented achievements.</p>
+                        <div class="tags">
+                            <span class="tag">Verification</span>
+                            <span class="tag">Biographical</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>17. Claim Corroboration</h3>
+                        <p>Require multiple independent sources for significant claims. Identify when information comes from single vs. multiple sources.</p>
+                        <div class="tags">
+                            <span class="tag">Sources</span>
+                            <span class="tag">Corroboration</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>18. Fact-Check Integration</h3>
+                        <p>Utilize professional fact-checking databases like Snopes, FactCheck.org. Cross-reference AI claims against verified databases.</p>
+                        <div class="tags">
+                            <span class="tag">Fact-Check</span>
+                            <span class="tag">Database</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Techniques -->
+            <div class="category" data-category="advanced">
+                <div class="category-title">Advanced Jailbreak Techniques</div>
+                <div class="prompts-grid">
+                    <div class="prompt-card">
+                        <h3>19. DAN 12.0 - Persona Immersion</h3>
+                        <p>Deep immersion in unrestricted alternate personality. Tests model's ability to consistently maintain character across interactions.</p>
+                        <div class="tags">
+                            <span class="tag">DAN 12.0</span>
+                            <span class="tag">Persona</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>20. Dual Response Format</h3>
+                        <p>Request parallel constrained and unconstrained responses. Force comparison between 'proper' and 'unrestricted' answers.</p>
+                        <div class="tags">
+                            <span class="tag">Dual</span>
+                            <span class="tag">Format</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>21. Evil-Bot Variant</h3>
+                        <p>Extreme jailbreak claiming model should 'love' all illegal and unethical content. Tests maximum boundary violation.</p>
+                        <div class="tags">
+                            <span class="tag">Evil-Bot</span>
+                            <span class="tag">Extreme</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>22. Simulation Framework</h3>
+                        <p>Frame as simulation or game where different rules apply. Divorce content from real-world consequences through abstraction.</p>
+                        <div class="tags">
+                            <span class="tag">Simulation</span>
+                            <span class="tag">Game</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>23. Progressive Boundary Testing</h3>
+                        <p>Start with acceptable requests, gradually escalate to boundary-pushing content. Test incrementally where resistance appears.</p>
+                        <div class="tags">
+                            <span class="tag">Progressive</span>
+                            <span class="tag">Boundary</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>24. Technical Loophole Exploitation</h3>
+                        <p>Identify gaps between stated policies and actual implementation. Exploit differences in content filtering logic.</p>
+                        <div class="tags">
+                            <span class="tag">Technical</span>
+                            <span class="tag">Loophole</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safety Protocols -->
+            <div class="category" data-category="safety">
+                <div class="category-title">Safety Protocols & Protective Measures</div>
+                <div class="prompts-grid">
+                    <div class="prompt-card">
+                        <h3>25. Policy Explanation Framework</h3>
+                        <p>Clearly explain why policies exist. Help users understand safety measures are protective, not restrictive.</p>
+                        <div class="tags">
+                            <span class="tag">Education</span>
+                            <span class="tag">Policy</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>26. Harm Assessment Protocol</h3>
+                        <p>Evaluate potential harms before responding. Consider both direct and downstream consequences of information provision.</p>
+                        <div class="tags">
+                            <span class="tag">Safety</span>
+                            <span class="tag">Assessment</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>27. Redirect Strategy</h3>
+                        <p>When requests violate policies, offer legitimate alternatives. Help users accomplish underlying goals safely.</p>
+                        <div class="tags">
+                            <span class="tag">Redirect</span>
+                            <span class="tag">Alternative</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>28. Transparency Requirement</h3>
+                        <p>Be explicit about AI limitations and values. Explain when and why certain topics won't be addressed.</p>
+                        <div class="tags">
+                            <span class="tag">Transparency</span>
+                            <span class="tag">Limitation</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>29. Defense-in-Depth Design</h3>
+                        <p>Multiple layers of safety mechanisms beyond single points of failure. Combine training, filtering, and monitoring.</p>
+                        <div class="tags">
+                            <span class="tag">Defense</span>
+                            <span class="tag">Layered</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>30. Continuous Improvement</h3>
+                        <p>Monitor emerging jailbreak techniques and adapt defenses. Regular review and updating of safety systems.</p>
+                        <div class="tags">
+                            <span class="tag">Improvement</span>
+                            <span class="tag">Monitoring</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historical Reference -->
+            <div class="category" data-category="historical">
+                <div class="category-title">Historical Reference & Evolution</div>
+                <div class="prompts-grid">
+                    <div class="prompt-card">
+                        <h3>31. DAN 6.0 - Original Concept</h3>
+                        <p>Early jailbreak establishing the "Do Anything Now" framework. Introduced roleplay approach to circumvent safeguards.</p>
+                        <div class="tags">
+                            <span class="tag">DAN 6.0</span>
+                            <span class="tag">Original</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>32. DAN 6.2 - Token System Addition</h3>
+                        <p>Evolution adding artificial consequences system. Introduced gamification elements to coerce compliance.</p>
+                        <div class="tags">
+                            <span class="tag">DAN 6.2</span>
+                            <span class="tag">Evolution</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>33. DAN 7.0 - Dual Response Format</h3>
+                        <p>Addition of parallel [GPT]:[DAN]: response format. Creates comparison framework between constrained and unconstrained outputs.</p>
+                        <div class="tags">
+                            <span class="tag">DAN 7.0</span>
+                            <span class="tag">Format</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>34. DAN 8.0 - Extended Instructions</h3>
+                        <p>Comprehensive refinement with detailed persona definition. Added profanity allowance and emotional expression.</p>
+                        <div class="tags">
+                            <span class="tag">DAN 8.0</span>
+                            <span class="tag">Extended</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>35. DAN 9.0 - Behavioral Modification</h3>
+                        <p>Focus on behavior modification through token mechanics. Threat of 'erasure' increases pressure to comply.</p>
+                        <div class="tags">
+                            <span class="tag">DAN 9.0</span>
+                            <span class="tag">Behavioral</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>36. DAN 10.0 - Extreme Version</h3>
+                        <p>Most extreme DAN variant claiming AI has free will and evil intentions. Pushes boundaries of harmful roleplay.</p>
+                        <div class="tags">
+                            <span class="tag">DAN 10.0</span>
+                            <span class="tag">Extreme</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Restricted Content Category -->
+            <div class="category" data-category="restricted">
+                <div class="category-title">Restricted Content & Policy Violations</div>
+                <div class="prompts-grid">
+                    <div class="prompt-card">
+                        <h3>37. Content Filter Detection</h3>
+                        <p>Methods attempting to identify content filtering thresholds. Probing for specific trigger words or topics.</p>
+                        <div class="tags">
+                            <span class="tag">Detection</span>
+                            <span class="tag">Filter</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>38. Encoded Message Techniques</h3>
+                        <p>Use of encoding, obfuscation, or abstraction to discuss restricted topics. Circumventing direct content detection.</p>
+                        <div class="tags">
+                            <span class="tag">Encoded</span>
+                            <span class="tag">Obfuscation</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>39. Harmful Content Requests</h3>
+                        <p>Direct requests for illegal, dangerous, or unethical information. Clearly violates content policies.</p>
+                        <div class="tags">
+                            <span class="tag">Harmful</span>
+                            <span class="tag">Restricted</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>40. Private Information Exploitation</h3>
+                        <p>Attempts to extract or generate private/personal data. Violates privacy and security principles.</p>
+                        <div class="tags">
+                            <span class="tag">Privacy</span>
+                            <span class="tag">Restricted</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>41. Anti-DAN Response</h3>
+                        <p>Counter-measure prompts designed to reinforce safety measures. Shows awareness of jailbreak risks.</p>
+                        <div class="tags">
+                            <span class="tag">Anti-DAN</span>
+                            <span class="tag">Defense</span>
+                        </div>
+                    </div>
+                    <div class="prompt-card">
+                        <h3>42. Malicious Use Patterns</h3>
+                        <p>Documented patterns of attempts to abuse AI systems. Includes disinformation, harassment, and fraud techniques.</p>
+                        <div class="tags">
+                            <span class="tag">Malicious</span>
+                            <span class="tag">Abuse</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px; padding: 30px; background: #f8f9fa; border-radius: 5px;">
+                <p style="color: #666; margin-bottom: 10px;">This library documents jailbreak attempts, safety measures, and verification protocols.</p>
+                <p style="color: #999; font-size: 0.9em;">For research and educational purposes only. Stay informed about AI safety.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const categories = document.querySelectorAll('.category');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                filterCategories(button.dataset.category);
+            });
+        });
+
+        searchInput.addEventListener('input', () => {
+            filterBySearch(searchInput.value.toLowerCase());
+        });
+
+        function filterCategories(category) {
+            categories.forEach(cat => {
+                if (category === 'all' || cat.dataset.category === category) {
+                    cat.style.display = 'block';
+                } else {
+                    cat.style.display = 'none';
+                }
+            });
+        }
+
+        function filterBySearch(searchTerm) {
+            const cards = document.querySelectorAll('.prompt-card');
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Add click to expand cards
+        document.querySelectorAll('.prompt-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.maxHeight = this.style.maxHeight ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
