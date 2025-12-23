@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attack Timeline & Evidence Map</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 0;
+        }
+        .sidebar {
+            background: #f8f9fa;
+            padding: 30px;
+            border-right: 2px solid #ddd;
+            max-height: calc(100vh - 280px);
+            overflow-y: auto;
+        }
+        .main {
+            padding: 30px;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        input[type="date"],
+        select {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .btn {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn:hover {
+            background: #5568d3;
+        }
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #667eea;
+        }
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 150px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 35px;
+            top: 10px;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px #667eea;
+        }
+        .timeline-item.employment::before {
+            background: #3498db;
+            box-shadow: 0 0 0 2px #3498db;
+        }
+        .timeline-item.security::before {
+            background: #e74c3c;
+            box-shadow: 0 0 0 2px #e74c3c;
+        }
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+        .timeline-item.employment .timeline-content {
+            border-left-color: #3498db;
+        }
+        .timeline-item.security .timeline-content {
+            border-left-color: #e74c3c;
+        }
+        .timeline-date {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        .timeline-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .timeline-description {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        .timeline-type {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: white;
+            background: #667eea;
+            margin-right: 5px;
+        }
+        .timeline-type.employment {
+            background: #3498db;
+        }
+        .timeline-type.security {
+            background: #e74c3c;
+        }
+        .incident-list {
+            margin-top: 20px;
+        }
+        .incident-item {
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .incident-item:hover {
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        .incident-item h4 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+        .incident-item small {
+            color: #999;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .incident-item .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            font-weight: 600;
+            color: white;
+            background: #667eea;
+        }
+        .incident-item.employment .badge {
+            background: #3498db;
+        }
+        .incident-item.security .badge {
+            background: #e74c3c;
+        }
+        .detail-view {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+            display: none;
+        }
+        .detail-view.active {
+            display: block;
+        }
+        .detail-view h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .detail-section {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .detail-section h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .detail-section p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .evidence-list {
+            list-style: none;
+        }
+        .evidence-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            color: #666;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            border-top: 3px solid #667eea;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 1.8em;
+            color: #667eea;
+            font-weight: bold;
+        }
+        .stat-label {
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+        }
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                border-right: none;
+                border-bottom: 2px solid #ddd;
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Attack Timeline & Evidence Map</h1>
+            <p>Chronological view of incidents and their relationships</p>
+        </div>
+
+        <div class="content">
+            <div class="sidebar">
+                <h3 style="color: #667eea; margin-bottom: 20px;">Filters & Summary</h3>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-number" id="totalIncidents">0</div>
+                        <div class="stat-label">Total Incidents</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="totalEvents">0</div>
+                        <div class="stat-label">Timeline Events</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Incident Type</label>
+                    <select id="typeFilter" onchange="filterTimeline()" style="width: 100%;">
+                        <option value="">All Types</option>
+                        <option value="employment">Employment Issues</option>
+                        <option value="security">Security Incidents</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">Start Date</label>
+                    <input type="date" id="startDate" onchange="filterTimeline()">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #333;">End Date</label>
+                    <input type="date" id="endDate" onchange="filterTimeline()">
+                </div>
+
+                <button class="btn" onclick="resetFilters()" style="width: 100%; margin-bottom: 30px;">Reset Filters</button>
+
+                <h3 style="color: #667eea; margin-bottom: 15px;">Incidents by Category</h3>
+                <div class="incident-list" id="incidentList">
+                    <p class="loading">Loading incidents...</p>
+                </div>
+            </div>
+
+            <div class="main">
+                <div class="controls">
+                    <button class="btn" onclick="loadTimeline()">⟳ Refresh</button>
+                    <button class="btn" onclick="exportTimeline()">📥 Export</button>
+                </div>
+
+                <div class="timeline" id="timeline">
+                    <p class="loading">Loading timeline...</p>
+                </div>
+
+                <div class="detail-view" id="detailView">
+                    <button class="btn" onclick="closeDetail()" style="margin-bottom: 20px;">← Back</button>
+                    <div id="detailContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api';
+        let allTimeline = [];
+        let allIncidents = [];
+
+        async function loadTimeline() {
+            try {
+                const response = await fetch(`${API_BASE}/timeline`);
+                const data = await response.json();
+                allTimeline = data;
+                
+                // Count total events
+                document.getElementById('totalEvents').textContent = data.length;
+                
+                filterTimeline();
+            } catch (error) {
+                console.error('Error loading timeline:', error);
+                document.getElementById('timeline').innerHTML = '<p class="loading">Error loading timeline</p>';
+            }
+        }
+
+        async function loadIncidents() {
+            try {
+                const response = await fetch(`${API_BASE}/incidents`);
+                const data = await response.json();
+                allIncidents = data;
+                
+                // Count total incidents
+                document.getElementById('totalIncidents').textContent = data.length;
+                
+                displayIncidents(data);
+            } catch (error) {
+                console.error('Error loading incidents:', error);
+                document.getElementById('incidentList').innerHTML = '<p class="loading">Error loading incidents</p>';
+            }
+        }
+
+        function filterTimeline() {
+            const typeFilter = document.getElementById('typeFilter').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            let filtered = allTimeline;
+
+            if (typeFilter) {
+                filtered = filtered.filter(item => item.incident_type === typeFilter);
+            }
+
+            if (startDate) {
+                filtered = filtered.filter(item => item.event_date >= startDate);
+            }
+
+            if (endDate) {
+                filtered = filtered.filter(item => item.event_date <= endDate);
+            }
+
+            displayTimeline(filtered);
+        }
+
+        function displayTimeline(events) {
+            const timeline = document.getElementById('timeline');
+            
+            if (events.length === 0) {
+                timeline.innerHTML = '<p class="loading">No events found</p>';
+                return;
+            }
+
+            timeline.innerHTML = events.map(event => `
+                <div class="timeline-item ${event.incident_type}">
+                    <div class="timeline-content">
+                        <div class="timeline-date">${formatDate(event.event_date)}</div>
+                        <div class="timeline-title">${event.event_title}</div>
+                        <div class="timeline-description">${event.event_description || ''}</div>
+                        <span class="timeline-type ${event.incident_type}">${event.incident_type.toUpperCase()}</span>
+                        ${event.severity ? `<span style="color: #999; font-size: 0.85em; margin-left: 10px;">Severity: ${event.severity}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function displayIncidents(incidents) {
+            const list = document.getElementById('incidentList');
+            
+            if (incidents.length === 0) {
+                list.innerHTML = '<p class="loading">No incidents documented</p>';
+                return;
+            }
+
+            list.innerHTML = incidents.map(incident => `
+                <div class="incident-item ${incident.incident_type}" onclick="showDetail(${incident.id})">
+                    <h4>${incident.title}</h4>
+                    <small>${formatDate(incident.incident_date)}</small>
+                    <span class="badge">${incident.category_name || 'Uncategorized'}</span>
+                </div>
+            `).join('');
+        }
+
+        async function showDetail(incidentId) {
+            try {
+                const response = await fetch(`${API_BASE}/incidents/${incidentId}`);
+                const data = await response.json();
+                
+                const detail = data.incident;
+                const timeline = data.timeline;
+                const evidence = data.evidence;
+                
+                let html = `
+                    <h2>${detail.title}</h2>
+                    
+                    <div class="detail-section">
+                        <h3>Incident Details</h3>
+                        <p><strong>Date:</strong> ${formatDate(detail.incident_date)}</p>
+                        <p><strong>Type:</strong> ${detail.incident_type}</p>
+                        <p><strong>Category:</strong> ${detail.category_name || 'Uncategorized'}</p>
+                        <p><strong>Description:</strong></p>
+                        <p>${detail.description}</p>
+                        ${detail.ip_address ? `<p><strong>IP Address:</strong> ${detail.ip_address}</p>` : ''}
+                    </div>
+                `;
+                
+                if (timeline.length > 0) {
+                    html += `
+                        <div class="detail-section">
+                            <h3>Timeline Events (${timeline.length})</h3>
+                            <ul class="evidence-list">
+                                ${timeline.map(t => `<li><strong>${formatDate(t.event_date)}:</strong> ${t.event_title}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                if (evidence.length > 0) {
+                    html += `
+                        <div class="detail-section">
+                            <h3>Evidence Files (${evidence.length})</h3>
+                            <ul class="evidence-list">
+                                ${evidence.map(e => `<li>${e.file_name} (${e.file_type})</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                document.getElementById('detailContent').innerHTML = html;
+                document.getElementById('detailView').classList.add('active');
+                document.getElementById('timeline').style.display = 'none';
+                
+            } catch (error) {
+                console.error('Error loading detail:', error);
+            }
+        }
+
+        function closeDetail() {
+            document.getElementById('detailView').classList.remove('active');
+            document.getElementById('timeline').style.display = 'block';
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return 'N/A';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function resetFilters() {
+            document.getElementById('typeFilter').value = '';
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            filterTimeline();
+        }
+
+        function exportTimeline() {
+            const csv = 'Date,Type,Title,Description,Category\n' +
+                allTimeline.map(e => 
+                    `"${formatDate(e.event_date)}","${e.incident_type}","${e.event_title}","${e.event_description || ''}","${e.category_name || ''}"`
+                ).join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `timeline-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+        }
+
+        // Load data on page load
+        loadTimeline();
+        loadIncidents();
+
+        // Refresh every 30 seconds
+        setInterval(() => {
+            loadTimeline();
+            loadIncidents();
+        }, 30000);
+    </script>
+</body>
+</html>

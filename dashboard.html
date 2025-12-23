@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Database Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .nav-links {
+            margin-top: 15px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: underline;
+            margin: 0 15px;
+            font-size: 0.9em;
+        }
+        .content {
+            padding: 40px;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ddd;
+        }
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: #999;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .form-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="datetime-local"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1em;
+        }
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: #f0f7ff;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .btn {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            transition: all 0.2s;
+        }
+        .card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .card p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        .card small {
+            color: #999;
+            display: block;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            border-top: 3px solid #667eea;
+        }
+        .stat-number {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+        .stat-label {
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #28a745;
+        }
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .message.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Evidence Database Dashboard</h1>
+            <p>Organize and track incidents, timeline events, and evidence</p>
+            <div class="nav-links">
+                <a href="/evidence-enhanced.html">Evidence Organizer</a>
+                <a href="/timeline.html">View Timeline</a>
+                <a href="/resources.html">Legal Resources</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('add-incident')">Add Incident</button>
+                <button class="tab-btn" onclick="switchTab('add-event')">Add Timeline Event</button>
+                <button class="tab-btn" onclick="switchTab('statistics')">Statistics</button>
+            </div>
+
+            <!-- Add Incident Tab -->
+            <div id="add-incident" class="tab-content active">
+                <div class="form-section">
+                    <h2 style="color: #667eea; margin-bottom: 30px;">Document New Incident</h2>
+                    
+                    <div id="incidentMessage"></div>
+                    
+                    <div class="form-group">
+                        <label>Incident Date</label>
+                        <input type="date" id="incidentDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Incident Type</label>
+                        <select id="incidentType" required>
+                            <option value="">Select...</option>
+                            <option value="employment">Employment Issue</option>
+                            <option value="security">Security Incident</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="incidentCategory" required>
+                            <option value="">Select...</option>
+                            <option value="Wage Theft">Wage Theft/Salary Cut</option>
+                            <option value="Work Permit Expired">Work Permit/Visa Issues</option>
+                            <option value="Retaliation">Retaliation/Discrimination</option>
+                            <option value="Contract Coercion">Forced Contract Changes</option>
+                            <option value="HR Bias">HR Bias/Unfairness</option>
+                            <option value="Unauthorized Access">Unauthorized Access</option>
+                            <option value="Data Exfiltration">Data Access/Exfiltration</option>
+                            <option value="Network Monitoring">Network Monitoring</option>
+                            <option value="Malware">Malware/Suspicious Software</option>
+                            <option value="Account Compromise">Account Compromise</option>
+                            <option value="IP Tracking">IP Address Logging</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Incident Title</label>
+                        <input type="text" id="incidentTitle" placeholder="Brief title of the incident" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Full Description</label>
+                        <textarea id="incidentDescription" placeholder="Detailed account of what happened..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>IP Address (if applicable)</label>
+                        <input type="text" id="incidentIP" placeholder="e.g., 192.168.1.100">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Witnesses/Evidence Names</label>
+                        <input type="text" id="incidentWitnesses" placeholder="Names, contacts, document references...">
+                    </div>
+
+                    <button class="btn" onclick="submitIncident()" style="width: 100%;">Save Incident to Database</button>
+                </div>
+            </div>
+
+            <!-- Add Timeline Event Tab -->
+            <div id="add-event" class="tab-content">
+                <div class="form-section">
+                    <h2 style="color: #667eea; margin-bottom: 30px;">Add Timeline Event</h2>
+                    
+                    <div id="eventMessage"></div>
+                    
+                    <div class="form-group">
+                        <label>Event Date & Time</label>
+                        <input type="datetime-local" id="eventDateTime" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Related Incident ID</label>
+                        <input type="number" id="eventIncidentId" placeholder="Leave blank to create incident-less event">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Event Title</label>
+                        <input type="text" id="eventTitle" placeholder="Title of this event" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Event Description</label>
+                        <textarea id="eventDescription" placeholder="Details of what happened..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Event Type</label>
+                        <select id="eventType" required>
+                            <option value="">Select...</option>
+                            <option value="harassment">Harassment/Discrimination</option>
+                            <option value="wage_reduction">Wage Reduction</option>
+                            <option value="contract_demand">Contract Demand</option>
+                            <option value="system_access">Unauthorized System Access</option>
+                            <option value="data_access">Data Access Attempt</option>
+                            <option value="malware_detected">Malware Detection</option>
+                            <option value="communication">Important Communication</option>
+                            <option value="filing">Official Filing/Report</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Severity</label>
+                        <select id="eventSeverity">
+                            <option value="">Select...</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="critical">Critical</option>
+                        </select>
+                    </div>
+
+                    <button class="btn" onclick="submitTimelineEvent()" style="width: 100%;">Save Event to Timeline</button>
+                </div>
+            </div>
+
+            <!-- Statistics Tab -->
+            <div id="statistics" class="tab-content">
+                <h2 style="color: #667eea; margin-bottom: 30px;">Database Statistics</h2>
+                
+                <div class="stats" id="statsContainer">
+                    <p style="grid-column: 1/-1; text-align: center; color: #999;">Loading statistics...</p>
+                </div>
+
+                <h3 style="color: #667eea; margin-bottom: 20px; margin-top: 30px;">Recent Incidents</h3>
+                <div class="grid" id="recentIncidents"></div>
+
+                <h3 style="color: #667eea; margin-bottom: 20px; margin-top: 30px;">Recent Timeline Events</h3>
+                <div class="grid" id="recentEvents"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api';
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'statistics') {
+                loadStatistics();
+            }
+        }
+
+        function showMessage(elementId, message, type) {
+            const el = document.getElementById(elementId);
+            el.innerHTML = `<div class="message ${type}">${message}</div>`;
+        }
+
+        async function submitIncident() {
+            const date = document.getElementById('incidentDate').value;
+            const type = document.getElementById('incidentType').value;
+            const category = document.getElementById('incidentCategory').value;
+            const title = document.getElementById('incidentTitle').value;
+            const description = document.getElementById('incidentDescription').value;
+            const ip = document.getElementById('incidentIP').value;
+            const witnesses = document.getElementById('incidentWitnesses').value;
+
+            if (!date || !type || !category || !title || !description) {
+                showMessage('incidentMessage', 'Please fill all required fields', 'error');
+                return;
+            }
+
+            try {
+                // Get or create category
+                const catResponse = await fetch(`${API_BASE}/categories?name=${encodeURIComponent(category)}&type=${type}`);
+                const catData = await catResponse.json();
+                const categoryId = catData.id;
+
+                // Create incident
+                const response = await fetch(`${API_BASE}/incidents`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        incident_date: date,
+                        category_id: categoryId,
+                        incident_type: type,
+                        title: title,
+                        description: description,
+                        ip_address: ip || null,
+                        witnesses: witnesses || null
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage('incidentMessage', `✓ Incident saved (ID: ${data.id})`, 'success');
+                    // Clear form
+                    document.getElementById('incidentDate').value = '';
+                    document.getElementById('incidentType').value = '';
+                    document.getElementById('incidentCategory').value = '';
+                    document.getElementById('incidentTitle').value = '';
+                    document.getElementById('incidentDescription').value = '';
+                    document.getElementById('incidentIP').value = '';
+                    document.getElementById('incidentWitnesses').value = '';
+                } else {
+                    showMessage('incidentMessage', `Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                showMessage('incidentMessage', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function submitTimelineEvent() {
+            const dateTime = document.getElementById('eventDateTime').value;
+            const incidentId = document.getElementById('eventIncidentId').value;
+            const title = document.getElementById('eventTitle').value;
+            const description = document.getElementById('eventDescription').value;
+            const type = document.getElementById('eventType').value;
+            const severity = document.getElementById('eventSeverity').value;
+
+            if (!dateTime || !title || !type) {
+                showMessage('eventMessage', 'Please fill all required fields', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/timeline`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        event_date: new Date(dateTime).toISOString(),
+                        incident_id: incidentId ? parseInt(incidentId) : null,
+                        event_title: title,
+                        event_description: description || null,
+                        event_type: type,
+                        severity: severity || null
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage('eventMessage', `✓ Event saved (ID: ${data.id})`, 'success');
+                    // Clear form
+                    document.getElementById('eventDateTime').value = '';
+                    document.getElementById('eventIncidentId').value = '';
+                    document.getElementById('eventTitle').value = '';
+                    document.getElementById('eventDescription').value = '';
+                    document.getElementById('eventType').value = '';
+                    document.getElementById('eventSeverity').value = '';
+                } else {
+                    showMessage('eventMessage', `Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                showMessage('eventMessage', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function loadStatistics() {
+            try {
+                const incidentsResponse = await fetch(`${API_BASE}/incidents`);
+                const timelineResponse = await fetch(`${API_BASE}/timeline`);
+
+                const incidents = await incidentsResponse.json();
+                const timeline = await timelineResponse.json();
+
+                const employment = incidents.filter(i => i.incident_type === 'employment').length;
+                const security = incidents.filter(i => i.incident_type === 'security').length;
+
+                document.getElementById('statsContainer').innerHTML = `
+                    <div class="stat-box">
+                        <div class="stat-number">${incidents.length}</div>
+                        <div class="stat-label">Total Incidents</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">${timeline.length}</div>
+                        <div class="stat-label">Timeline Events</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">${employment}</div>
+                        <div class="stat-label">Employment Issues</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">${security}</div>
+                        <div class="stat-label">Security Incidents</div>
+                    </div>
+                `;
+
+                // Show recent incidents
+                const recent = incidents.sort((a, b) => new Date(b.incident_date) - new Date(a.incident_date)).slice(0, 6);
+                document.getElementById('recentIncidents').innerHTML = recent.map(i => `
+                    <div class="card">
+                        <h3>${i.title}</h3>
+                        <p>${i.description.substring(0, 100)}...</p>
+                        <small><strong>Date:</strong> ${new Date(i.incident_date).toLocaleDateString()}</small>
+                        <small><strong>Type:</strong> ${i.incident_type}</small>
+                        <small><strong>Category:</strong> ${i.category_name || 'Uncategorized'}</small>
+                    </div>
+                `).join('');
+
+                // Show recent events
+                const recentEvents = timeline.sort((a, b) => new Date(b.event_date) - new Date(a.event_date)).slice(0, 6);
+                document.getElementById('recentEvents').innerHTML = recentEvents.map(e => `
+                    <div class="card">
+                        <h3>${e.event_title}</h3>
+                        <p>${e.event_description || 'No description'}</p>
+                        <small><strong>Date:</strong> ${new Date(e.event_date).toLocaleDateString()}</small>
+                        <small><strong>Type:</strong> ${e.event_type}</small>
+                        ${e.severity ? `<small><strong>Severity:</strong> ${e.severity}</small>` : ''}
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error('Error loading statistics:', error);
+                document.getElementById('statsContainer').innerHTML = `<p style="grid-column: 1/-1; color: #e74c3c;">API is not running. Start the backend server first.</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,8 +1,11 @@
 [project]
 name = "workspace"
 version = "0.1.0"
-description = "Add your description here"
+description = "Evidence organization and timeline system"
 requires-python = ">=3.11"
 dependencies = [
     "replit-object-storage>=1.0.2",
+    "psycopg2-binary>=2.9.9",
+    "flask>=3.0.0",
+    "flask-cors>=4.0.0",
 ]

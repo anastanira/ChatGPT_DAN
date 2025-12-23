@@ -17,6 +17,10 @@ author = "agent"
 task = "workflow.run"
 args = "web-server"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "api-server"
+
 [[workflows.workflow]]
 name = "web-server"
 author = "agent"
@@ -29,9 +33,25 @@ waitForPort = 5000
 [workflows.workflow.metadata]
 outputType = "webview"
 
+[[workflows.workflow]]
+name = "api-server"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 api.py"
+waitForPort = 8000
+
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 8000
+externalPort = 8000
 
 [objectStorage]
 defaultBucketID = "replit-objstore-768be857-6090-4ab8-ab3c-e784a7e702e8"

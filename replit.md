@@ -157,9 +157,55 @@ Pre-formatted templates for:
    - Export as JSON for data processing
    - Export as TXT for email/printing
 
+## Database System (NEW)
+
+### PostgreSQL Database
+- **Status**: Created and configured
+- **Tables**: incidents, timeline_events, evidence_files, categories, incident_connections
+- **Features**:
+  - Organize incidents by date, type, and category
+  - Track chronological timeline of events
+  - Link related incidents
+  - Store evidence file references
+
+### API Server (Port 8000)
+- **Endpoints**:
+  - `/api/incidents` - Create/retrieve incidents
+  - `/api/timeline` - Create/view timeline events
+  - `/api/evidence` - Track evidence files
+  - `/api/connections` - Link related incidents
+  - `/api/categories` - Manage categories
+
+### Web Interfaces
+
+**Dashboard** (`/dashboard.html`) - Main database interface
+- Add incidents and categorize them
+- Create timeline events
+- View real-time statistics
+- Recent incidents and events list
+
+**Timeline View** (`/timeline.html`) - Visual timeline
+- Chronological view of all events
+- Filter by date range and type
+- Incident detail view
+- CSV export of timeline
+
+### Workflows
+- **web-server** (port 5000): Serves HTML files
+- **api-server** (port 8000): PostgreSQL API backend
+
+## Usage Workflow
+
+1. **Document Evidence** → Use Evidence Organizer or Dashboard
+2. **Create Timeline Events** → Dashboard creates searchable timeline
+3. **View Attack Pattern** → Timeline shows chronological flow
+4. **Export for Legal Use** → CSV/JSON for lawyers and authorities
+5. **Track Relationships** → Link connected incidents
+
 ## Notes
 - Main library documents jailbreak attempts for research/educational purposes
 - Tools help affected employees organize evidence through legitimate legal channels
+- Database stores all incidents with dates for timeline analysis
 - All file types preserved - nothing deleted, only added
-- All exports are client-side (your data stays private)
 - System supports comprehensive evidence organization across multiple formats
+- PostgreSQL provides persistent storage and complex queries
