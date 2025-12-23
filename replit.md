@@ -50,7 +50,7 @@ An interactive web-based library documenting ChatGPT "DAN" (Do Anything Now) jai
 - **Responsive Design**: Works on desktop and mobile devices
 - **Professional UI**: Purple gradient theme with smooth interactions
 
-## NEW: Evidence & Legal Tools (Added Dec 23)
+## Evidence & Legal Tools Suite (Added Dec 23)
 
 ### Evidence Organizer (`/evidence.html`)
 A comprehensive tool to document and organize:
@@ -88,7 +88,78 @@ Instead it provides:
 - Guidance for legitimate complaints
 - Documentation frameworks for legal proceedings
 
+## All Files in Project
+
+### Application Files
+- **index.html** - Original DAN prompts library (8 categories, 40+ prompts)
+- **evidence.html** - Basic evidence organizer with timeline and reports
+- **evidence-enhanced.html** - Advanced organizer with multi-format export (JSON, CSV, Markdown, PDF, TXT)
+- **resources.html** - Legal and professional resource directory
+- **server.py** - Python HTTP server (port 5000)
+- **templates.md** - Pre-formatted templates for documentation
+
+### Configuration Files
+- **.replit** - Replit project configuration with workflows
+- **.gitignore** - Python environment files exclusion
+- **pyproject.toml** - Python project dependencies
+- **uv.lock** - UV dependency lock file
+- **citation.cff** - Academic citation information
+
+### Documentation
+- **README.md** - Original DAN prompt reference (from GitHub import)
+- **replit.md** - Complete project documentation (this file)
+- **main.py** - Placeholder Python file (can be repurposed)
+
+## Multi-Format Export Capabilities
+
+### Enhanced Evidence Organizer (`/evidence-enhanced.html`)
+- **JSON Export**: Structured data for analysis
+- **CSV Export**: Spreadsheet-compatible format for Excel/Google Sheets
+- **PDF Export**: Professional document for filing
+- **Markdown Export**: Formatted text for sharing
+- **TXT Export**: Plain text report
+
+### Template System (`/templates.md`)
+Pre-formatted templates for:
+- Wage theft documentation
+- Work permit/visa discrimination
+- Contract coercion incidents
+- Unauthorized access incidents
+- Data exfiltration suspicions
+- Witness statements
+- Evidence preservation checklists
+- Key contacts reference
+
+## Workflow Status
+- **web-server**: Running on port 5000, serving all HTML files and static content
+- All exports work client-side (no server processing needed for privacy)
+
+## Usage Instructions
+
+1. **Document Evidence**
+   - Use `/evidence.html` or `/evidence-enhanced.html`
+   - Add employment issues (wages, visa, contract, HR bias)
+   - Add security incidents (IP addresses, unauthorized access)
+
+2. **Export for Legal Use**
+   - Enhanced version supports CSV, JSON, PDF, Markdown, TXT
+   - All exports download directly to your computer
+   - Data never leaves your browser
+
+3. **Reference Templates**
+   - View `/templates.md` for structured documentation format
+   - Follow examples to organize evidence systematically
+   - Use witness statement template for third-party accounts
+
+4. **Share with Authorities/Lawyers**
+   - Export as PDF for formal filing
+   - Export as CSV for analysis/evidence tracking
+   - Export as JSON for data processing
+   - Export as TXT for email/printing
+
 ## Notes
 - Main library documents jailbreak attempts for research/educational purposes
-- New tools help affected employees protect themselves through legitimate legal channels
-- All information is for lawful use only
+- Tools help affected employees organize evidence through legitimate legal channels
+- All file types preserved - nothing deleted, only added
+- All exports are client-side (your data stays private)
+- System supports comprehensive evidence organization across multiple formats

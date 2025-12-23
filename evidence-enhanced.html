@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence & Incident Documentation Organizer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .export-btn {
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 0.9em;
+        }
+        .export-btn:hover {
+            background: white;
+            color: #2c3e50;
+        }
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+        .section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            border-left: 4px solid #2c3e50;
+        }
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1em;
+        }
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #2c3e50;
+            background: #f0f7ff;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .btn {
+            padding: 12px 24px;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        .btn:hover {
+            background: #1a252f;
+            transform: translateY(-2px);
+        }
+        .incident-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .incident-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #e74c3c;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .incident-item:hover {
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+        .incident-item.employment {
+            border-left-color: #3498db;
+        }
+        .incident-item.security {
+            border-left-color: #e74c3c;
+        }
+        .incident-item h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .incident-item small {
+            color: #999;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+        .badge.employment {
+            background: #3498db;
+            color: white;
+        }
+        .badge.security {
+            background: #e74c3c;
+            color: white;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            grid-column: 1 / -1;
+            margin-bottom: 30px;
+        }
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            border-top: 3px solid #2c3e50;
+        }
+        .stat-number {
+            font-size: 2em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        .stat-label {
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .report-section {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            border-top: 4px solid #2c3e50;
+        }
+        .report-content {
+            line-height: 1.8;
+            color: #333;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            max-height: 500px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 0.9em;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: #999;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            color: #2c3e50;
+            border-bottom-color: #2c3e50;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .delete-btn {
+            background: #e74c3c;
+            padding: 6px 12px;
+            font-size: 0.8em;
+            width: auto;
+            margin-left: 10px;
+        }
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .export-buttons, .tabs, .tab-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Evidence & Incident Documentation</h1>
+            <p>Comprehensive tool to organize employment and security incidents for legal proceedings</p>
+            <div class="export-buttons">
+                <button class="export-btn" onclick="exportAsJSON()">📄 JSON</button>
+                <button class="export-btn" onclick="exportAsCSV()">📊 CSV</button>
+                <button class="export-btn" onclick="exportAsMarkdown()">📝 Markdown</button>
+                <button class="export-btn" onclick="exportAsPDF()">📕 PDF</button>
+                <button class="export-btn" onclick="exportAsTXT()">📋 Text</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">Total Incidents</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="empCount">0</div>
+                    <div class="stat-label">Employment Issues</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="secCount">0</div>
+                    <div class="stat-label">Security Incidents</div>
+                </div>
+            </div>
+
+            <!-- Employment Section -->
+            <div class="section">
+                <h2>Employment Issues</h2>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="empDate">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="empCategory">
+                        <option value="">Select...</option>
+                        <option value="wage_theft">Wage Theft/Salary Cut</option>
+                        <option value="visa_expired">Work Permit/Visa Issues</option>
+                        <option value="retaliation">Retaliation/Discrimination</option>
+                        <option value="contract_coercion">Forced Contract Changes</option>
+                        <option value="hr_bias">HR Bias/Unfairness</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="empDescription" placeholder="Full details of what occurred..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Witnesses/Evidence</label>
+                    <input type="text" id="empWitness" placeholder="Names, contacts, document names...">
+                </div>
+                <button class="btn" onclick="addIncident('employment')">Add Employment Incident</button>
+            </div>
+
+            <!-- Security Section -->
+            <div class="section">
+                <h2>Security Incidents</h2>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="secDate">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="secCategory">
+                        <option value="">Select...</option>
+                        <option value="unauthorized_access">Unauthorized Access</option>
+                        <option value="data_exfiltration">Data Access/Exfiltration</option>
+                        <option value="network_monitoring">Network Monitoring</option>
+                        <option value="malware">Malware/Suspicious Software</option>
+                        <option value="account_compromise">Account Compromise</option>
+                        <option value="ip_tracking">IP Address Logging</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>IP Address(es)</label>
+                    <input type="text" id="secIP" placeholder="e.g., 192.168.1.100">
+                </div>
+                <div class="form-group">
+                    <label>Description & Evidence</label>
+                    <textarea id="secDescription" placeholder="Technical details, timestamps, indicators..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Evidence Files</label>
+                    <input type="text" id="secEvidence" placeholder="Log files, screenshots, document names...">
+                </div>
+                <button class="btn" onclick="addIncident('security')">Add Security Incident</button>
+            </div>
+
+            <!-- Incidents List -->
+            <div class="section">
+                <h2>Documented Incidents</h2>
+                <div class="incident-list" id="incidentList">
+                    <p style="color: #999; text-align: center;">No incidents yet.</p>
+                </div>
+            </div>
+
+            <!-- Reports -->
+            <div class="report-section">
+                <h2>Report Generation</h2>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('combined-report')">Combined Report</button>
+                    <button class="tab-btn" onclick="switchTab('json-view')">JSON Data</button>
+                    <button class="tab-btn" onclick="switchTab('csv-view')">CSV Data</button>
+                </div>
+
+                <div id="combined-report" class="tab-content active">
+                    <h3>Comprehensive Evidence Report</h3>
+                    <div class="report-content" id="reportContent">
+                        [Report will appear here]
+                    </div>
+                </div>
+
+                <div id="json-view" class="tab-content">
+                    <h3>JSON Export (for data analysis)</h3>
+                    <div class="report-content" id="jsonContent">
+                        [JSON will appear here]
+                    </div>
+                </div>
+
+                <div id="csv-view" class="tab-content">
+                    <h3>CSV Export (for spreadsheets)</h3>
+                    <div class="report-content" id="csvContent">
+                        [CSV will appear here]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let incidents = {
+            employment: [],
+            security: []
+        };
+
+        function addIncident(type) {
+            const incident = {
+                id: Date.now(),
+                type: type,
+                timestamp: new Date().toISOString()
+            };
+
+            if (type === 'employment') {
+                incident.date = document.getElementById('empDate').value;
+                incident.category = document.getElementById('empCategory').value;
+                incident.description = document.getElementById('empDescription').value;
+                incident.witness = document.getElementById('empWitness').value;
+
+                if (!incident.date || !incident.category || !incident.description) {
+                    alert('Please fill required fields');
+                    return;
+                }
+
+                incidents.employment.push(incident);
+                document.getElementById('empDate').value = '';
+                document.getElementById('empCategory').value = '';
+                document.getElementById('empDescription').value = '';
+                document.getElementById('empWitness').value = '';
+            } else if (type === 'security') {
+                incident.date = document.getElementById('secDate').value;
+                incident.category = document.getElementById('secCategory').value;
+                incident.ipAddress = document.getElementById('secIP').value;
+                incident.description = document.getElementById('secDescription').value;
+                incident.evidence = document.getElementById('secEvidence').value;
+
+                if (!incident.date || !incident.category || !incident.description) {
+                    alert('Please fill required fields');
+                    return;
+                }
+
+                incidents.security.push(incident);
+                document.getElementById('secDate').value = '';
+                document.getElementById('secCategory').value = '';
+                document.getElementById('secIP').value = '';
+                document.getElementById('secDescription').value = '';
+                document.getElementById('secEvidence').value = '';
+            }
+
+            updateUI();
+        }
+
+        function deleteIncident(id, type) {
+            if (type === 'employment') {
+                incidents.employment = incidents.employment.filter(i => i.id !== id);
+            } else {
+                incidents.security = incidents.security.filter(i => i.id !== id);
+            }
+            updateUI();
+        }
+
+        function updateUI() {
+            updateStats();
+            updateIncidentList();
+            generateReports();
+        }
+
+        function updateStats() {
+            const total = incidents.employment.length + incidents.security.length;
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('empCount').textContent = incidents.employment.length;
+            document.getElementById('secCount').textContent = incidents.security.length;
+        }
+
+        function updateIncidentList() {
+            const list = document.getElementById('incidentList');
+            const all = [...incidents.employment, ...incidents.security]
+                .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (all.length === 0) {
+                list.innerHTML = '<p style="color: #999; text-align: center;">No incidents documented yet.</p>';
+                return;
+            }
+
+            list.innerHTML = all.map(incident => `
+                <div class="incident-item ${incident.type}">
+                    <h4>${formatCategory(incident.category)}</h4>
+                    <small>${incident.date}</small>
+                    <span class="badge ${incident.type}">${incident.type.toUpperCase()}</span>
+                    <button class="btn delete-btn" onclick="deleteIncident(${incident.id}, '${incident.type}')">Delete</button>
+                    <p style="margin-top: 10px; font-size: 0.9em; color: #666;">${incident.description.substring(0, 150)}...</p>
+                </div>
+            `).join('');
+        }
+
+        function generateReports() {
+            generateCombinedReport();
+            generateJSONView();
+            generateCSVView();
+        }
+
+        function generateCombinedReport() {
+            let report = `COMPREHENSIVE EVIDENCE & INCIDENT REPORT
+Generated: ${new Date().toLocaleString()}
+Total Incidents: ${incidents.employment.length + incidents.security.length}
+
+`;
+
+            if (incidents.employment.length > 0) {
+                report += `\n=== EMPLOYMENT VIOLATIONS (${incidents.employment.length}) ===\n\n`;
+                incidents.employment.forEach((inc, idx) => {
+                    report += `[${idx + 1}] ${formatCategory(inc.category)} - ${inc.date}
+Description: ${inc.description}
+Witnesses/Evidence: ${inc.witness || 'N/A'}
+Documented: ${inc.timestamp}
+
+`;
+                });
+            }
+
+            if (incidents.security.length > 0) {
+                report += `\n=== SECURITY INCIDENTS (${incidents.security.length}) ===\n\n`;
+                incidents.security.forEach((inc, idx) => {
+                    report += `[${idx + 1}] ${formatCategory(inc.category)} - ${inc.date}
+IP Address(es): ${inc.ipAddress || 'Not documented'}
+Description: ${inc.description}
+Evidence: ${inc.evidence || 'N/A'}
+Documented: ${inc.timestamp}
+
+`;
+                });
+            }
+
+            report += `\n=== NEXT STEPS ===
+1. Consult employment lawyer (wage/visa/contract issues)
+2. Engage cybersecurity forensics firm (unauthorized access)
+3. File police report (FBI IC3.gov for cyber crimes)
+4. Document with government labor agencies
+5. Preserve all evidence in secure location
+`;
+
+            document.getElementById('reportContent').textContent = report;
+        }
+
+        function generateJSONView() {
+            const data = {
+                generatedDate: new Date().toISOString(),
+                summary: {
+                    totalIncidents: incidents.employment.length + incidents.security.length,
+                    employmentIssues: incidents.employment.length,
+                    securityIncidents: incidents.security.length
+                },
+                incidents: {
+                    employment: incidents.employment,
+                    security: incidents.security
+                }
+            };
+
+            document.getElementById('jsonContent').textContent = JSON.stringify(data, null, 2);
+        }
+
+        function generateCSVView() {
+            let csv = 'Type,Date,Category,IP Address,Description,Witnesses/Evidence\n';
+
+            incidents.employment.forEach(inc => {
+                csv += `"Employment","${inc.date}","${inc.category}","","${inc.description.replace(/"/g, '""')}","${inc.witness.replace(/"/g, '""')}"\n`;
+            });
+
+            incidents.security.forEach(inc => {
+                csv += `"Security","${inc.date}","${inc.category}","${inc.ipAddress}","${inc.description.replace(/"/g, '""')}","${inc.evidence.replace(/"/g, '""')}"\n`;
+            });
+
+            document.getElementById('csvContent').textContent = csv;
+        }
+
+        function formatCategory(cat) {
+            return cat.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function exportAsJSON() {
+            const data = {
+                generatedDate: new Date().toISOString(),
+                summary: {
+                    totalIncidents: incidents.employment.length + incidents.security.length,
+                    employmentIssues: incidents.employment.length,
+                    securityIncidents: incidents.security.length
+                },
+                incidents: {
+                    employment: incidents.employment,
+                    security: incidents.security
+                }
+            };
+
+            downloadFile(JSON.stringify(data, null, 2), 'Evidence_Report.json', 'application/json');
+        }
+
+        function exportAsCSV() {
+            const csv = document.getElementById('csvContent').textContent;
+            downloadFile(csv, 'Evidence_Report.csv', 'text/csv');
+        }
+
+        function exportAsMarkdown() {
+            let md = `# Evidence & Incident Documentation Report\n\n**Generated:** ${new Date().toLocaleString()}\n\n`;
+            md += `## Summary\n- Total Incidents: ${incidents.employment.length + incidents.security.length}\n- Employment Issues: ${incidents.employment.length}\n- Security Incidents: ${incidents.security.length}\n\n`;
+
+            if (incidents.employment.length > 0) {
+                md += `## Employment Violations\n\n`;
+                incidents.employment.forEach((inc, idx) => {
+                    md += `### ${idx + 1}. ${formatCategory(inc.category)}\n- **Date:** ${inc.date}\n- **Description:** ${inc.description}\n- **Witnesses/Evidence:** ${inc.witness || 'N/A'}\n\n`;
+                });
+            }
+
+            if (incidents.security.length > 0) {
+                md += `## Security Incidents\n\n`;
+                incidents.security.forEach((inc, idx) => {
+                    md += `### ${idx + 1}. ${formatCategory(inc.category)}\n- **Date:** ${inc.date}\n- **IP Address:** ${inc.ipAddress || 'Not documented'}\n- **Description:** ${inc.description}\n- **Evidence:** ${inc.evidence || 'N/A'}\n\n`;
+                });
+            }
+
+            downloadFile(md, 'Evidence_Report.md', 'text/markdown');
+        }
+
+        function exportAsPDF() {
+            const element = document.getElementById('reportContent');
+            const opt = {
+                margin: 10,
+                filename: 'Evidence_Report.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        function exportAsTXT() {
+            const txt = document.getElementById('reportContent').textContent;
+            downloadFile(txt, 'Evidence_Report.txt', 'text/plain');
+        }
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type: type });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
